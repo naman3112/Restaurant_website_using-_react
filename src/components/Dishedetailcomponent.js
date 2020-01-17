@@ -14,16 +14,70 @@ class Dishdetail extends Component{
             this.setState({ selectedDish: dish});
         }
     
+        
+        renderComments(dish){
+            if(dish!=null){
+             var commentsofauthor = dish.comments.map(function(comp)
+                        {
+                           var d =Date.parse(comp.date);
+                         var ipl=new Date(d);
+                      var k=   ipl.toDateString();
+                       
+                            return(
+                                   <div>
+                                            
+                            
+                                        
+                                    <p>{comp.comment} </p> 
+                                   <p>-- {comp.author+"  , "}  {k}  </p>
+
+                                   </div>
+                                      
+                                                      
+                            )
+                        }
+
+                
+                )
+
+                        return(
+                            <div>
+                               <h4>Comments</h4> 
+                                {commentsofauthor}
+                            </div>
+                        )
+                        
+
+                    }
+            
+            
+            
+             else{
+                 return (
+                        <div>
+
+                        </div>
+                 )   
+                
+        }
+    }
+
+        
         renderDish(dish) {
             if (dish != null)
                 return(
-                    <Card>
+                   
+               
+                   <Card>      
                         <CardImg top src={dish.image} alt={dish.name} />
                         <CardBody>
-                          <CardTitle>{dish.name}</CardTitle>
+                          <CardTitle><strong>{dish.name}</strong></CardTitle>
                           <CardText>{dish.description}</CardText>
                         </CardBody>
                     </Card>
+                    
+                     
+                   
                 );
             else
                 return(
@@ -40,8 +94,10 @@ class Dishdetail extends Component{
                   onClick={() => this.onDishSelect(dish)}>
                   <CardImg width="100%" src={dish.image} alt={dish.name} />
                   <CardImgOverlay>
-                      <CardTitle>{dish.name}</CardTitle>
+                      <CardTitle><strong>{dish.name}</strong></CardTitle>
                   </CardImgOverlay>
+                
+            
                 </Card>
               </div>
             );
@@ -50,14 +106,27 @@ class Dishdetail extends Component{
         return (
             <div className="container">
                 <div className="row">
+                    
                     {menu}
                 </div>
+
+
+
                 <div className="row">
-                  <div  className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.state.selectedDish)}
-                  </div>
-                </div>
-            </div>
+                      <div  className="col-12 col-md-5 m-1">
+                            {this.renderDish(this.state.selectedDish)}
+                   
+                     </div>
+                     <div className="col-12 col-md-5 m-1">   
+                    
+                 {this.renderComments(this.state.selectedDish)}
+                    </div>
+                
+                 </div>
+                     
+               
+                 
+                 </div>
         );
     }
     

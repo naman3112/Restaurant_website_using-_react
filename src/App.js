@@ -25,7 +25,7 @@ render(){
       <Navbar dark color="primary">
         <div className="container">
           <NavbarBrand href="/">
-            hey Ristorante Con Fusion
+            <strong>Ristorante Con Fusion</strong>
             </NavbarBrand>
         </div>
       </Navbar>
