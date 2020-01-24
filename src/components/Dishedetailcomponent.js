@@ -1,20 +1,13 @@
-import React, { Component } from 'react';
-import{ Card, CardImg, CardImgOverlay, CardText, CardBody,
+import React from 'react';
+import{ Card, CardImg, CardText, CardBody,
     CardTitle } from 'reactstrap';
 
-    import { DISHES } from '../shared/dishes';
    
-class Dishdetail extends Component{
-    
-        constructor(props) {
-            super(props);
+   
         
+    
 
-        }
-   
-
-
-        renderComments(dish){
+        function RenderComments({dish}){
             if(dish!=null){
              var commentsofauthor = dish.comments.map(function(comp)
                         {
@@ -23,7 +16,7 @@ class Dishdetail extends Component{
                       var k=   ipl.toDateString();
                        
                             return(
-                                   <div>
+                                   <div key={dish.id}>
                                             
                             
                                         
@@ -34,13 +27,11 @@ class Dishdetail extends Component{
                                       
                                                       
                             )
-                        }
-
-                
-                )
+                        } 
+                        )
 
                         return(
-                            <div>
+                            <div key={dish.id}>
                                <h4>Comments</h4> 
                                 {commentsofauthor}
                             </div>
@@ -62,12 +53,12 @@ class Dishdetail extends Component{
     }
 
         
-        renderDish(dish) {
+       function RenderDish({dish}) {
             if (dish != null)
                 return(
                    
                
-                   <Card>      
+                   <Card key={dish.id}>      
                         <CardImg top src={dish.image} alt={dish.name} />
                         <CardBody>
                           <CardTitle><strong>{dish.name}</strong></CardTitle>
@@ -80,28 +71,23 @@ class Dishdetail extends Component{
                 );
             else
                 return(
-                    <div></div>
+                    <div ></div>
                 );
         }
     
-    render(){
-    
-      
+    const Dishdetail=(props)=>{
     
         return (
-            <div className="container">
+            <div  className="container">
                
-
-
-
-                <div className="row">
+                  <div className="row">
                       <div  className="col-12 col-md-5 m-1">
-                            {this.renderDish(this.props.dish1)}
+                            <RenderDish dish={props.dish1}/>
                    
                      </div>
                      <div className="col-12 col-md-5 m-1">   
                     
-                 {this.renderComments(this.props.dish1)}
+                 <RenderComments dish={props.dish1}/>
                     </div>
                 
                  </div>
@@ -115,7 +101,7 @@ class Dishdetail extends Component{
     
     
     
-    }
+ 
 
 
 
