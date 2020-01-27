@@ -1,22 +1,18 @@
 import React from 'react';
 import{ Card, CardImg, CardText, CardBody,
-    CardTitle } from 'reactstrap';
+    CardTitle,Breadcrumb,BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom'
 
-   
-   
-        
-    
-
-        function RenderComments({dish}){
-            if(dish!=null){
-             var commentsofauthor = dish.comments.map(function(comp)
+        function RenderComments({comments}){
+            if(comments!=null){
+             var commentsofauthor = comments.map(function(comp)
                         {
                            var d =Date.parse(comp.date);
                          var ipl=new Date(d);
                       var k=   ipl.toDateString();
                        
                             return(
-                                   <div key={dish.id}>
+                                   <div key={comp.id}>
                                             
                             
                                         
@@ -31,7 +27,7 @@ import{ Card, CardImg, CardText, CardBody,
                         )
 
                         return(
-                            <div key={dish.id}>
+                            <div key={comments.id}>
                                <h4>Comments</h4> 
                                 {commentsofauthor}
                             </div>
@@ -56,8 +52,7 @@ import{ Card, CardImg, CardText, CardBody,
        function RenderDish({dish}) {
             if (dish != null)
                 return(
-                   
-               
+                 
                    <Card key={dish.id}>      
                         <CardImg top src={dish.image} alt={dish.name} />
                         <CardBody>
@@ -68,7 +63,7 @@ import{ Card, CardImg, CardText, CardBody,
                     
                      
                    
-                );
+                )
             else
                 return(
                     <div ></div>
@@ -76,26 +71,50 @@ import{ Card, CardImg, CardText, CardBody,
         }
     
     const Dishdetail=(props)=>{
-    
-        return (
-            <div  className="container">
-               
-                  <div className="row">
-                      <div  className="col-12 col-md-5 m-1">
-                            <RenderDish dish={props.dish1}/>
-                   
-                     </div>
-                     <div className="col-12 col-md-5 m-1">   
-                    
-                 <RenderComments dish={props.dish1}/>
-                    </div>
-                
-                 </div>
-                     
-               
+        if(props.dish!=null){
+            return (
+                <div  className="container">
                  
-                 </div>
-        );
+                    <div className="row">
+                  <Breadcrumb>
+                    
+                    <BreadcrumbItem><Link to ='/menu'>Menu</Link>  </BreadcrumbItem>
+                    
+                    <BreadcrumbItem active>{props.dish.name} </BreadcrumbItem>
+    
+                  </Breadcrumb>
+                    <div className="col=12">
+                            <h3>{props.dish.name}</h3>
+                            <hr/>
+                        </div>
+                 </div> 
+                      <div className="row">
+                          <div  className="col-12 col-md-5 m-1">
+                                <RenderDish dish={props.dish}/>
+                       
+                         </div>
+                         <div className="col-12 col-md-5 m-1">   
+                        
+                             <RenderComments comments={props.comments}/>
+                        </div>
+                    
+                     </div>
+                         
+                   
+                     
+                     </div>
+           
+           
+           )
+
+               
+    
+        }
+        else{
+            return<div></div>
+        }
+ 
+   
     }
     
     
