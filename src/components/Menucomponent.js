@@ -32,7 +32,7 @@ function RenderMenuItem({dish}){
                 <BreadcrumbItem active>Menu </BreadcrumbItem>
            
               </Breadcrumb>
-              <div className="col=12">
+              <div className="col-12">
                 <h3>Menu</h3>
                 <hr/>
               </div>
