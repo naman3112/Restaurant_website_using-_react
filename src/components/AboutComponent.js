@@ -1,6 +1,37 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
+import { Breadcrumb,BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+
+
+function RenderLeader(props){
+   
+
+
+
+
+      return(
+        
+        <Media className="pt-5 pb-3  row">
+            
+        <Media className="col-2 " >
+          <Media  src={props.leader.image} alt="Generic placeholder image" />
+        </Media>
+        <Media body className="col-8" >
+          <Media heading>
+            {props.leader.name}
+          </Media>
+          <Media>
+            {props.leader.designation}
+          </Media>
+          {<br/>} {props.leader.description}
+        </Media>
+      </Media>
+    );
+}
+
+
+
+
 
 function About(props) {
 
@@ -8,6 +39,12 @@ function About(props) {
         return (
             <p>Leader {leader.name}</p>
         );
+    });
+
+    const render1= props.leaders.map((leader1)=>{
+            return(
+                <RenderLeader leader={leader1}/>
+            )
     });
 
     return(
@@ -66,7 +103,8 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+
+                        {render1}
                     </Media>
                 </div>
             </div>
