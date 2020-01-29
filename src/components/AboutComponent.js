@@ -3,7 +3,7 @@ import { Breadcrumb,BreadcrumbItem, Card, CardBody, CardHeader, Media } from 're
 import { Link } from 'react-router-dom';
 
 
-function RenderLeader(props){
+function RenderLeader({leader}){
    
 
 
@@ -14,16 +14,16 @@ function RenderLeader(props){
         <Media className="pt-5 pb-3  row">
             
         <Media className="col-2 " >
-          <Media  src={props.leader.image} alt="Generic placeholder image" />
+          <Media  src={leader.image} alt="Generic placeholder image" />
         </Media>
         <Media body className="col-8" >
           <Media heading>
-            {props.leader.name}
+            {leader.name}
           </Media>
           <Media>
-            {props.leader.designation}
+            {leader.designation}
           </Media>
-          {<br/>} {props.leader.description}
+          {<br/>} {leader.description}
         </Media>
       </Media>
     );
