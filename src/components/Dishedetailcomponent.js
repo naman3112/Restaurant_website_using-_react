@@ -1,52 +1,12 @@
-import React,{useState,Component} from 'react';
-import{ Card, CardImg, CardText, CardBody, Modal, ModalHeader, ModalBody, ModalFooter,
-    CardTitle,Breadcrumb,Button,BreadcrumbItem } from 'reactstrap';
+import React,{Component} from 'react';
+import{ Card, CardImg,Row, CardText, CardBody, Modal, ModalHeader, ModalBody, ModalFooter,
+    CardTitle,Breadcrumb,Button,Label,BreadcrumbItem,Col } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import {Control,LocalForm,Errors} from 'react-redux-form';
 
-/*
-class CommentForm extends Component{
-    constructor(){
-        
-    super();
-this.handleClose=this.handleClose.bind(this);
-this.handleShow=this.handleShow.bind(this);
-//const [show, setShow] = useState(false);
-
-    }
-     
-
-    handleClose = () => this.setShow(false);
-     handleShow = () => this.setShow(true);
-
-    render(){
-        return(
-            <LocalForm>
-            <Button variant="primary" onClick={this.handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={this.show} onHide={this.handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={this.handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={this.handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      </LocalForm>
-        )
-    }
-    
-}
-
-   */
+const required=(val)=> val && val.length;
+const maxLength =(len)=>(val)=>!(val) || (val.length<=len);
+const minLength=(len)=>(val)=>val&&(val.length>=len);
   class CommentForm extends Component {
     
     constructor(props){
@@ -55,11 +15,16 @@ this.handleShow=this.handleShow.bind(this);
         modal:false
     }
     this.toggle=this.toggle.bind(this);
+    this.handleSubmit=this.handleSubmit.bind(this);
     }
+
+    handleSubmit(values){
+      console.log("Current state is "+JSON.stringify(values));
+      alert("Current state is :"+JSON.stringify(values));
+    
+  }
   
-  //  const [modal, setModal] = useState(false);
   
-    //const toggle = () => setModal(!modal);
   toggle(){
       this.setState(
           {
@@ -73,14 +38,82 @@ this.handleShow=this.handleShow.bind(this);
         <div>
           <Button outline color="secondary" size="medium"  onClick={this.toggle}><i className="fa fa-pencil fa-md "></i> Submit Comment</Button>
           <Modal isOpen={this.state.modal} toggle={this.toggle}>
-            <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+            <ModalHeader toggle={this.toggle}>Submit Comment</ModalHeader>
             <ModalBody>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-              <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-            </ModalFooter>
+            <LocalForm onSubmit={(values)=>this.handleSubmit(values)}>
+
+            <Row className="form-group">
+            <Label className="ml-3">Rating</Label>                             
+                                <Col md={{size: 12}}>
+                                    <Control.select  model=".rating" name="rating"
+                                        className="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                    </Control.select>
+                                </Col>
+              
+                            </Row>
+
+
+
+
+
+            <Row className="form-group">
+                               
+              <Label htmlFor="yourname" className="ml-1" md={3}>Your Name</Label>
+                         <Col md={12}>
+                              <Control.text model=".yourname" type="text" id="yourname" name="yourname"
+                                placeholder="Your Name"
+                                className="form-control"
+                                  validators={
+                                      {
+                                          required,minLength:minLength(3),maxLength:maxLength(15)
+                                       }
+                                  }
+                            
+                                       />
+                                      
+                                      <Errors className="text-danger"
+                                      model=".yourname"
+                                      show="touched"
+                                      messages={{
+                                          required:'Required',minLength:'Must be greater than 2 characters',
+                                        maxLength:'Must be 15 characters or less'
+                                      }
+
+                                      }
+                                      />             
+                           </Col>
+                          
+            
+             </Row>
+                      
+             <Row className="form-group">
+                 <Label htmlFor="message" md={5}>Comment</Label>
+                     <Col md={12} cl>
+                       <Control.textarea model=".message" id="message" name="message"
+                          rows="6"
+                             className="form-control" />
+                      </Col>
+            </Row>                               
+            <Row   >
+            <Col  >
+            <Button  color="primary" type="submit">Submit</Button>{' '}
+            
+            </Col>
+             
+            </Row>                         
+
+              </LocalForm>
+
+  
+              </ModalBody>
+          
+              
           </Modal>
         </div>
       );
