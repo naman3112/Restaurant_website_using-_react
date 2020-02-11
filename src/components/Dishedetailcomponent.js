@@ -19,9 +19,10 @@ const minLength=(len)=>(val)=>val&&(val.length>=len);
     }
 
     handleSubmit(values){
-      console.log("Current state is "+JSON.stringify(values));
+       console.log("Current state is "+JSON.stringify(values));
       alert("Current state is :"+JSON.stringify(values));
-    
+    this.props.addComment(this.props.dishId, values.rating, values.yourname, values.message);
+
   }
   
   
@@ -121,11 +122,7 @@ const minLength=(len)=>(val)=>val&&(val.length>=len);
  
 }
 }  
-  
-
-
-
-        function RenderComments({comments}){
+        function RenderComments({comments,addComment,dishId}){
             if(comments!=null){
              var commentsofauthor = comments.map(function(comp)
                         {
@@ -152,14 +149,12 @@ const minLength=(len)=>(val)=>val&&(val.length>=len);
                             <div key={comments.id}>
                                <h4>Comments</h4> 
                                 {commentsofauthor}
-                                <CommentForm/>
+                                <CommentForm dishId={dishId} addComment={addComment} />
                             </div>
                         )
                         
 
                     }
-            
-            
             
              else{
                  return (
@@ -220,7 +215,11 @@ const minLength=(len)=>(val)=>val&&(val.length>=len);
                          </div>
                          <div className="col-12 col-md-5 m-1">   
                         
-                             <RenderComments comments={props.comments}/>
+                             <RenderComments comments={props.comments}
+                             
+                             addComment={props.addComment}
+                             dishId={props.dish.id}
+                             />
                         </div>
                     
                      </div>
